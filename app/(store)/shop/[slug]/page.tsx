@@ -1,0 +1,48 @@
+import { notFound } from "next/navigation";
+import type { Metadata } from "next";
+import { getProduct, getProducts } from "@/lib/catalog";
+import { ProductDetail } from "@/components/ProductDetail";
+import { ProductRow } from "@/components/Section";
+
+export async function generateStaticParams() {
+  return (await getProducts()).map((product) => ({ slug: product.slug }));
+}
+
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
+  const { slug } = await params;
+  const product = await getProduct(slug);
+
+  if (!product) {
+    return { title: "Product not found — Nakpri Laptops and Accessories" };
+  }
+
+  return {
+    title: `${product.name} — Nakpri Laptops and Accessories`,
+    description: `${product.description} Same-day in Greater Accra, nationwide delivery across Ghana.`,
+  };
+}
+
+export default async function ProductPage({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params;
+  const product = await getProduct(slug);
+
+  if (!product) {
+    notFound();
+  }
+
+  const others = (await getProducts()).filter((p) => p.slug !== product.slug);
+  const related = [
+    ...others.filter((p) => p.category === product.category),
+    ...others.filter((p) => p.category !== product.category && p.isBestseller),
+    ...others,
+  ]
+    .filter((p, i, list) => list.findIndex((q) => q.slug === p.slug) === i)
+    .slice(0, 4);
+
+  return (
+    <>
+      <ProductDetail product={product} />
+      <ProductRow title="Related hardware" href={`/shop?category=${product.category}`} products={related} />
+    </>
+  );
+}

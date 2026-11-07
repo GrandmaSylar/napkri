@@ -1,0 +1,127 @@
+import Link from "next/link";
+import Image from "next/image";
+import { TelegramLogo, WhatsappLogo, PhoneCall } from "@phosphor-icons/react/dist/ssr";
+import { CATEGORIES } from "@/lib/products";
+import { CONTACT } from "@/lib/contact";
+import { WHATSAPP_BUSINESS_NUMBER } from "@/lib/whatsapp";
+import { InstallApp } from "@/components/InstallApp";
+
+const SHOP_LINKS = [
+  { label: "Shop everything", href: "/shop" },
+  { label: "Categories", href: "/categories" },
+  { label: "New arrivals", href: "/shop?sort=newest" },
+  { label: "Bestsellers", href: "/shop?sort=popular" },
+  { label: "Deals", href: "/shop?sale=1" },
+  { label: "Wishlist", href: "/wishlist" },
+];
+
+export function Footer() {
+  return (
+    <footer className="mt-16 bg-[#0a121e] text-white/70">
+      <div className="mx-auto grid max-w-7xl grid-cols-1 gap-x-6 gap-y-9 min-[400px]:grid-cols-2 px-4 pt-12 pb-[max(2.5rem,env(safe-area-inset-bottom))] sm:px-6 sm:pt-16 md:gap-12 lg:grid-cols-4">
+        <div className="min-[400px]:col-span-2 lg:col-span-1">
+          <Link href="/" className="inline-block">
+            <Image
+              src="/logo.png"
+              alt="Nakpri Laptops and Accessories"
+              width={624}
+              height={414}
+              className="h-14 w-auto brightness-0 invert"
+            />
+          </Link>
+          <p className="mt-5 max-w-xs text-base leading-relaxed sm:text-sm">
+            Dealers of premium laptops, desktop computers, 4K monitors, high-speed storage, and modern tech accessories.
+          </p>
+          <p className="mt-4 text-base leading-relaxed text-white/90 sm:text-sm">
+            <a href={`tel:${CONTACT.phoneTel}`} className="inline-flex min-h-11 items-center hover:text-mint active:text-mint sm:min-h-0">
+              {CONTACT.phoneDisplay}
+            </a>
+            <br />
+            {CONTACT.address}
+          </p>
+          <div className="mt-3 -ml-2.5 flex gap-1">
+            <a
+              href={CONTACT.telegram.url}
+              target="_blank"
+              rel="noreferrer"
+              aria-label={`Nakpri on Telegram, ${CONTACT.telegram.handle}`}
+              className="press grid size-11 place-items-center rounded-full text-white/80 hover:bg-white/10 hover:text-white"
+            >
+              <TelegramLogo size={22} />
+            </a>
+            <a
+              href={`https://wa.me/${WHATSAPP_BUSINESS_NUMBER}`}
+              target="_blank"
+              rel="noreferrer"
+              aria-label="Nakpri on WhatsApp"
+              className="press grid size-11 place-items-center rounded-full text-white/80 hover:bg-white/10 hover:text-white"
+            >
+              <WhatsappLogo size={22} />
+            </a>
+            <a
+              href={`tel:${CONTACT.phoneTel}`}
+              aria-label="Call Nakpri"
+              className="press grid size-11 place-items-center rounded-full text-white/80 hover:bg-white/10 hover:text-white"
+            >
+              <PhoneCall size={22} />
+            </a>
+          </div>
+        </div>
+
+        <FooterColumn title="Shop" links={SHOP_LINKS} />
+        <FooterColumn
+          title="Categories"
+          links={CATEGORIES.map((c) => ({ label: c.name, href: `/shop?category=${c.name}` }))}
+        />
+
+        <div className="min-[400px]:col-span-2 md:col-span-1">
+          <p className="font-display text-sm font-bold tracking-wide text-white uppercase">Help &amp; Orders</p>
+          <ul className="mt-3 space-y-2 text-base sm:text-sm">
+            <li>
+              <a href={`https://wa.me/${WHATSAPP_BUSINESS_NUMBER}`} target="_blank" rel="noreferrer" className="inline-flex min-h-11 items-center font-semibold text-mint hover:text-white active:text-white sm:min-h-9">
+                Order on WhatsApp ({CONTACT.phoneDisplay})
+              </a>
+            </li>
+            <li>
+              <a href={CONTACT.telegram.url} target="_blank" rel="noreferrer" className="inline-flex min-h-11 items-center hover:text-white active:text-white sm:min-h-9">
+                Telegram {CONTACT.telegram.handle}
+              </a>
+            </li>
+            <li>
+              <a href={`tel:${CONTACT.phoneTel}`} className="inline-flex min-h-11 items-center hover:text-white active:text-white sm:min-h-9">
+                Call {CONTACT.phoneDisplay}
+              </a>
+            </li>
+            <li>
+              <InstallApp />
+            </li>
+            <li>Same-day delivery in Greater Accra</li>
+            <li>Insured nationwide delivery across Ghana</li>
+          </ul>
+        </div>
+      </div>
+      <div className="border-t border-white/10">
+        <p className="mx-auto max-w-7xl px-4 py-5 text-center text-xs text-white/50 sm:px-6">
+          © {new Date().getFullYear()} Nakpri Laptops and Accessories · Accra, Ghana · Nationwide Deliveries
+        </p>
+      </div>
+    </footer>
+  );
+}
+
+function FooterColumn({ title, links }: { title: string; links: { label: string; href: string }[] }) {
+  return (
+    <div>
+      <p className="font-display text-sm font-bold tracking-wide text-white uppercase">{title}</p>
+      <ul className="mt-2 text-base sm:text-sm">
+        {links.map((link) => (
+          <li key={link.label}>
+            <Link href={link.href} className="inline-flex min-h-11 min-w-11 items-center transition-colors hover:text-white active:text-white sm:min-h-9">
+              {link.label}
+            </Link>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}

@@ -1,0 +1,156 @@
+@import "tailwindcss";
+
+@theme {
+  /* Tech Palette: Deep Carbon Navy, Titanium Slate, Electric Cyan & Pure Contrast */
+  --color-ink: #0a0f1d; /* Midnight tech black: body text */
+  --color-brand: #0f2338; /* Deep carbon navy: primary buttons, dark panels, navbar */
+  --color-brand-soft: #1b3654; /* Navy hover */
+  --color-cream: #f6f8fb; /* Clean tech page background */
+  --color-ice: #eaf0f6; /* Image wells, secondary hardware surfaces */
+  --color-mist: #eff4f9; /* Muted surface, search/inputs */
+  --color-line: #dbe4ee; /* Crisp hardware borders */
+  --color-slate: #52667a; /* Secondary specs & description text */
+  --color-mint: #38bdf8; /* Electric cyan / sky blue: accent surfaces, badges */
+  --color-mint-deep: #0284c7; /* Cobalt / cyan text & icons on light surfaces */
+  --color-sand: #cbd5e1; /* Titanium silver: accent text on dark navy */
+  --color-gold: #f59e0b; /* Amber gold: "New" and "Bestseller" */
+  --color-coral: #e11d48; /* Red/Rose: deals and low stock */
+  --color-coral-deep: #be123c;
+  --color-danger: #dc2626;
+
+  --font-display: var(--font-space-grotesk), ui-sans-serif, system-ui, sans-serif;
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
+  --ease-drawer: cubic-bezier(0.32, 0.72, 0, 1);
+
+  --animate-ticker: ticker 38s linear infinite;
+}
+
+@keyframes ticker {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes settle {
+  from {
+    opacity: 0;
+    transform: translateY(24px) rotate(0deg) scale(0.96);
+  }
+}
+
+@keyframes bump {
+  50% {
+    transform: scale(1.25);
+  }
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+@layer base {
+  img,
+  video {
+    max-width: 100%;
+    height: auto;
+  }
+
+  button,
+  a {
+    -webkit-tap-highlight-color: transparent;
+  }
+}
+
+body {
+  background: var(--color-cream);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    radial-gradient(40rem 30rem at 100% 0%, rgb(56 189 248 / 0.12), transparent 70%),
+    radial-gradient(34rem 28rem at 0% 55%, rgb(15 35 56 / 0.05), transparent 70%),
+    linear-gradient(180deg, #f0f4f9, var(--color-cream) 60%);
+}
+
+::selection {
+  background: var(--color-mint);
+  color: var(--color-ink);
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-brand);
+  outline-offset: 2px;
+}
+
+input,
+textarea,
+select {
+  caret-color: var(--color-mint-deep);
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-mist);
+}
+::-webkit-scrollbar-thumb {
+  background: rgb(15 35 56 / 0.35);
+  border-radius: 999px;
+  border: 2px solid var(--color-mist);
+}
+
+@utility tabular {
+  font-variant-numeric: tabular-nums;
+}
+
+@utility press {
+  transition-property: transform, background-color, color, border-color, opacity, box-shadow;
+  transition-duration: 160ms;
+  transition-timing-function: var(--ease-out);
+  &:active:not(:disabled) {
+    transform: scale(0.97);
+  }
+}
+
+@utility no-scrollbar {
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+.hero-card {
+  animation: settle 900ms var(--ease-out) both;
+}
+
+.bump {
+  animation: bump 320ms var(--ease-out);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .hero-card,
+  .bump {
+    animation: none;
+  }
+  .animate-ticker {
+    animation-duration: 120s;
+  }
+}
