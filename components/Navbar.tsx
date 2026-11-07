@@ -4,7 +4,7 @@ import { useEffect, useRef, useState, type FormEvent } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { List, X, MagnifyingGlass, Heart, ShoppingCart, WhatsappLogo, ArrowRight, TiktokLogo, InstagramLogo } from "@phosphor-icons/react";
+import { List, X, MagnifyingGlass, Heart, ShoppingCart, WhatsappLogo, ArrowRight, TelegramLogo, PhoneCall } from "@phosphor-icons/react";
 import { useCart } from "@/context/CartContext";
 import { useWishlist } from "@/context/WishlistContext";
 import { WHATSAPP_BUSINESS_NUMBER } from "@/lib/whatsapp";
@@ -182,11 +182,11 @@ export function Navbar() {
             Chat with our concierge
           </a>
           <div className="mt-3 flex items-center justify-center gap-1">
-            <a href={CONTACT.tiktok.url} target="_blank" rel="noreferrer" aria-label="Nakpri Laptops and Accessories on TikTok" className="press grid size-11 place-items-center rounded-full text-brand hover:bg-mist">
-              <TiktokLogo size={22} />
+            <a href={CONTACT.telegram.url} target="_blank" rel="noreferrer" aria-label="Nakpri Laptops and Accessories on Telegram" className="press grid size-11 place-items-center rounded-full text-brand hover:bg-mist">
+              <TelegramLogo size={22} />
             </a>
-            <a href={CONTACT.instagram.url} target="_blank" rel="noreferrer" aria-label="Nakpri Laptops and Accessories on Instagram" className="press grid size-11 place-items-center rounded-full text-brand hover:bg-mist">
-              <InstagramLogo size={22} />
+            <a href={`tel:${CONTACT.phoneTel}`} aria-label="Call Nakpri Laptops and Accessories" className="press grid size-11 place-items-center rounded-full text-brand hover:bg-mist">
+              <PhoneCall size={22} />
             </a>
           </div>
           <p className="mt-1 text-center text-xs text-slate">{CONTACT.address}</p>

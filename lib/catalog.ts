@@ -50,8 +50,14 @@ export function rowToProduct(row: ProductRow): Product {
 
 /** Uncached read, used by the admin area so it always shows the latest data. */
 export async function fetchProducts(): Promise<Product[]> {
-  const rows = await db()`select * from products order by sort_order, created_at`;
-  return (rows as ProductRow[]).map(rowToProduct);
+  if (!process.env.DATABASE_URL) return [];
+  try {
+    const rows = await db()`select * from products order by sort_order, created_at`;
+    return (rows as ProductRow[]).map(rowToProduct);
+  } catch (err) {
+    console.warn("fetchProducts failed:", err);
+    return [];
+  }
 }
 
 /** Storefront read. Cached until an admin change calls revalidateTag(PRODUCTS_TAG). */
@@ -62,8 +68,14 @@ export async function getProduct(slug: string) {
 }
 
 export async function fetchActivity(limit = 10): Promise<Activity[]> {
-  const rows = await db()`select * from activity_log order by created_at desc limit ${limit}`;
-  return rows as Activity[];
+  if (!process.env.DATABASE_URL) return [];
+  try {
+    const rows = await db()`select * from activity_log order by created_at desc limit ${limit}`;
+    return rows as Activity[];
+  } catch (err) {
+    console.warn("fetchActivity failed:", err);
+    return [];
+  }
 }
 
 /* ─── Storage ───────────────────────────────────────────────────────────── */
@@ -88,31 +100,47 @@ export type StorageUsage = {
  * everything else (Postgres's own system catalogs).
  */
 export async function fetchStorageUsage(): Promise<StorageUsage> {
-  const [row] = await db()`
-    select
-      (select coalesce(sum(pg_database_size(datname)), 0)
-         from pg_database
-        where not datistemplate and has_database_privilege(datname, 'CONNECT'))::bigint as used,
-      pg_total_relation_size('products')::bigint as products,
-      pg_total_relation_size('activity_log')::bigint as activity,
-      (select count(*) from products)::int as product_count,
-      (select coalesce(avg(pg_column_size(p.*)), 0) from products p)::float as avg_row
-  `;
-
-  const used = Number(row.used);
-  const products = Number(row.products);
-  const activity = Number(row.activity);
-  const productCount = Number(row.product_count);
-  // Row size plus ~60% for index entries and page overhead; at least 1 KB so the estimate stays conservative.
-  const bytesPerProduct = Math.max(1024, Math.round(Number(row.avg_row) * 1.6));
-
-  return {
+  const fallback: StorageUsage = {
     limit: STORAGE_LIMIT_BYTES,
-    used,
-    products,
-    activity,
-    system: Math.max(0, used - products - activity),
-    productCount,
-    bytesPerProduct,
+    used: 0,
+    products: 0,
+    activity: 0,
+    system: 0,
+    productCount: 0,
+    bytesPerProduct: 1024,
   };
+  if (!process.env.DATABASE_URL) return fallback;
+  try {
+    const [row] = await db()`
+      select
+        (select coalesce(sum(pg_database_size(datname)), 0)
+           from pg_database
+          where not datistemplate and has_database_privilege(datname, 'CONNECT'))::bigint as used,
+        pg_total_relation_size('products')::bigint as products,
+        pg_total_relation_size('activity_log')::bigint as activity,
+        (select count(*) from products)::int as product_count,
+        (select coalesce(avg(pg_column_size(p.*)), 0) from products p)::float as avg_row
+    `;
+
+    if (!row) return fallback;
+    const used = Number(row.used);
+    const products = Number(row.products);
+    const activity = Number(row.activity);
+    const productCount = Number(row.product_count);
+    // Row size plus ~60% for index entries and page overhead; at least 1 KB so the estimate stays conservative.
+    const bytesPerProduct = Math.max(1024, Math.round(Number(row.avg_row) * 1.6));
+
+    return {
+      limit: STORAGE_LIMIT_BYTES,
+      used,
+      products,
+      activity,
+      system: Math.max(0, used - products - activity),
+      productCount,
+      bytesPerProduct,
+    };
+  } catch (err) {
+    console.warn("fetchStorageUsage failed:", err);
+    return fallback;
+  }
 }

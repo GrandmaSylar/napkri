@@ -23,7 +23,7 @@ create table if not exists public.products (
 -- Kept outside the create table so re-running this file updates the allowed list.
 alter table public.products drop constraint if exists products_category_check;
 alter table public.products add constraint products_category_check
-  check (category in ('Perfumes', 'Bags', 'Clothing', 'Heels', 'Slippers', 'Accessories', 'Beauty'));
+  check (category in ('Laptops', 'Desktops', 'Monitors', 'Storage', 'Audio', 'Accessories', 'Peripherals'));
 
 create table if not exists public.activity_log (
   id            bigint generated always as identity primary key,

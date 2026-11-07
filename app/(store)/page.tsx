@@ -5,7 +5,7 @@ import { Container, ProductRow, SectionHeader } from "@/components/Section";
 import { BundlePanel } from "@/components/BundlePanel";
 import { Newsletter } from "@/components/Newsletter";
 
-const LOOK = ["silk-charmeuse-shirt", "wool-wide-leg-trouser", "minimal-gold-hoop", "quilted-crossbody"];
+const WORKSTATION_SETUP = ["macbook-air-m2", "dell-ultrasharp-27-4k", "logitech-mx-master-3s", "samsung-t7-shield-2tb"];
 
 export default async function Home() {
   const products = await getProducts();
@@ -14,13 +14,13 @@ export default async function Home() {
   const newArrivals = products.filter((p) => p.isFeatured).slice(-4).reverse();
   const bestsellers = products.filter((p) => p.isBestseller).slice(0, 4);
   const almostGone = products.filter(isLowStock).slice(0, 4);
-  const look = LOOK.map(bySlug).filter((p): p is Product => p !== undefined && !isSoldOut(p));
+  const setup = WORKSTATION_SETUP.map(bySlug).filter((p): p is Product => p !== undefined && !isSoldOut(p));
   const counts = Object.fromEntries(CATEGORIES.map((c) => [c.name, products.filter((p) => p.category === c.name).length]));
   const lowest = products.length ? Math.min(...products.map((p) => p.price)) : 0;
 
   return (
     <main>
-      {products.length >= 2 && <Hero lead={products[0]} second={bySlug("structured-leather-tote") ?? products[1]} from={lowest} />}
+      {products.length >= 2 && <Hero lead={products[0]} second={bySlug("thinkpad-x1-carbon-gen11") ?? products[1]} from={lowest} />}
       <Ticker />
       <PriceTiles />
       {deals.length > 0 && <DealsPanel deals={deals.slice(0, 3)} />}
@@ -37,7 +37,7 @@ export default async function Home() {
 
       <section className="mt-12 sm:mt-20">
         <Container>
-          {look.length >= 2 && <BundlePanel title="Complete the look" products={look} />}
+          {setup.length >= 2 && <BundlePanel title="The workstation bundle" products={setup} />}
         </Container>
       </section>
 

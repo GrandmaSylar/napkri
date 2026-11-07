@@ -4,6 +4,8 @@ import { getProduct, getProducts } from "@/lib/catalog";
 import { ProductDetail } from "@/components/ProductDetail";
 import { ProductRow } from "@/components/Section";
 
+export const dynamicParams = true;
+
 export async function generateStaticParams() {
   return (await getProducts()).map((product) => ({ slug: product.slug }));
 }
