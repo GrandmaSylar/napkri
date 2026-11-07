@@ -22,11 +22,11 @@ export function Footer() {
         <div className="min-[400px]:col-span-2 lg:col-span-1">
           <Link href="/" className="inline-block">
             <Image
-              src="/logo.png"
+              src="/logo-dark.png"
               alt="Nakpri Laptops and Accessories"
-              width={624}
-              height={414}
-              className="h-14 w-auto brightness-0 invert"
+              width={460}
+              height={96}
+              className="h-10 w-auto"
             />
           </Link>
           <p className="mt-5 max-w-xs text-base leading-relaxed sm:text-sm">

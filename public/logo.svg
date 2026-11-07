@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 460 96" width="460" height="96" fill="none">
+    <!-- Laptop Icon -->
+    <g transform="translate(4, 8)">
+      <!-- Screen Lid Outer -->
+      <rect x="8" y="4" width="76" height="52" rx="7" fill="#0F2338" />
+      <!-- Display Bezel / Screen -->
+      <rect x="14" y="10" width="64" height="40" rx="4" fill="#0A0F1D" />
+      <!-- Terminal Prompt Symbol >_ -->
+      <path d="M24 22 L34 30 L24 38" stroke="#38BDF8" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+      <line x1="40" y1="36" x2="52" y2="36" stroke="#38BDF8" stroke-width="3" stroke-linecap="round" />
+      <!-- Laptop Base / Keyboard deck -->
+      <path d="M2 56 L90 56 L83 66 L9 66 Z" fill="#0F2338" />
+      <!-- Trackpad notch -->
+      <line x1="38" y1="60" x2="54" y2="60" stroke="#38BDF8" stroke-width="2" stroke-linecap="round" />
+    </g>
+
+    <!-- Wordmark -->
+    <text x="110" y="52" font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="42" font-weight="900" letter-spacing="1.5" fill="#0F2338">NAKPRI</text>
+    <text x="112" y="74" font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="12.5" font-weight="700" letter-spacing="3.8" fill="#64748B">LAPTOPS &amp; ACCESSORIES</text>
+    
+    <!-- Tech Accent Bar -->
+    <rect x="112" y="83" width="56" height="3" rx="1.5" fill="#0284C7" />
+  </svg>

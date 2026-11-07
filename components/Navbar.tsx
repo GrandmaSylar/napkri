@@ -71,7 +71,7 @@ export function Navbar() {
       <header className="sticky top-0 z-40 border-b border-line bg-cream/90 backdrop-blur-md">
         <div className="mx-auto flex h-[60px] max-w-7xl items-center gap-6 px-4 sm:h-[70px] sm:px-6">
           <Link href="/" className="press shrink-0" aria-label="Nakpri Laptops and Accessories home">
-            <Image src="/logo.png" alt="Nakpri Laptops and Accessories" width={624} height={414} priority className="h-11 w-auto sm:h-[54px]" />
+            <Image src="/logo.png" alt="Nakpri Laptops and Accessories" width={460} height={96} priority className="h-9 w-auto sm:h-11" />
           </Link>
 
           <nav className="hidden items-center gap-5 xl:flex" aria-label="Main">

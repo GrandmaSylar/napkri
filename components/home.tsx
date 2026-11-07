@@ -16,17 +16,17 @@ export function Hero({ lead, second, from }: { lead: Product; second: Product; f
         <div>
           <p className="inline-flex items-center gap-2 rounded-full border border-line bg-white px-3 py-1.5 text-[11px] font-semibold sm:px-3.5 sm:text-xs text-brand uppercase shadow-[0_2px_8px_-4px_oklch(30%_0.03_45/0.2)]">
             <span className="size-2 rounded-full bg-mint" />
-            Order by 2 PM, wear it tonight
+            Order by 2 PM, receive it today
           </p>
           <h1 className="mt-5 font-display sm:mt-6 text-[clamp(1.75rem,0.6rem+6.2vw,3.75rem)] leading-[1.02] font-bold tracking-[-0.025em] text-ink uppercase">
-            Perfume, leather
+            Laptops, Desktops
             <br />
-            &amp; silk in Accra,
+            &amp; Tech Gear,
             <br />
-            <span className="text-mint-deep">by tonight.</span>
+            <span className="text-mint-deep">Delivered Nationwide.</span>
           </h1>
           <p className="mt-5 max-w-[46ch] text-base leading-relaxed text-slate sm:mt-6 sm:text-lg">
-            Extraits de parfum, full-grain leather, linen and silk, chosen in Accra and delivered to your door the same day.
+            High-performance MacBooks, ThinkPads, 4K monitors, fast NVMe storage, and premium computer accessories delivered across Ghana.
           </p>
           <div className="mt-7 grid grid-cols-1 gap-2.5 min-[400px]:grid-cols-2 sm:mt-8 sm:flex sm:gap-3">
             <Link
@@ -122,7 +122,7 @@ function HeroCard({
 
 /* ─── Ticker ────────────────────────────────────────────────────────────── */
 
-const TICKER = ["Same-day in Accra", "Extraits de parfum", "Full-grain leather", "Heels & slippers", "Linen & silk", "18k gold vermeil", "Pay with MoMo"];
+const TICKER = ["Nationwide Delivery across Ghana", "MacBooks & ThinkPads", "4K Monitors & Docks", "Fast NVMe SSDs", "Mechanical Keyboards", "Original Accessories", "Same-day in Greater Accra", "Pay with MoMo"];
 
 export function Ticker() {
   const items = [...TICKER, ...TICKER];
@@ -184,7 +184,7 @@ export function DealsPanel({ deals }: { deals: Product[] }) {
           <div className="pointer-events-none absolute -top-40 -right-24 size-[34rem] rounded-full bg-[radial-gradient(closest-side,oklch(76%_0.035_55/0.28),transparent)]" />
           <div className="relative flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between">
             <h2 className="font-display text-[clamp(1.5rem,1rem+2.6vw,2.25rem)] leading-[1.05] font-bold tracking-tight text-white uppercase">
-              The same pieces.
+              Top Hardware.
               <br />
               <span className="text-sand">Marked down.</span>
             </h2>
@@ -256,7 +256,7 @@ export function CategoryGrid({ counts }: { counts: Record<string, number> }) {
           <div className="flex flex-col gap-0.5 px-3 py-2.5 min-[420px]:flex-row min-[420px]:items-baseline min-[420px]:justify-between min-[420px]:gap-2 sm:px-3.5 sm:py-3">
             <p className="truncate text-[15px] font-semibold text-ink sm:text-base">{c.name}</p>
             <p className="tabular shrink-0 text-xs text-slate">
-              {counts[c.name] ?? 0} {counts[c.name] === 1 ? "piece" : "pieces"}
+              {counts[c.name] ?? 0} {counts[c.name] === 1 ? "model" : "models"}
             </p>
           </div>
         </Link>

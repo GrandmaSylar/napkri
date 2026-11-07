@@ -66,7 +66,7 @@ export function CartDrawer() {
                 <ShoppingCart size={28} />
               </span>
               <p className="mt-5 font-display text-xl font-bold tracking-tight text-ink">Your cart is empty</p>
-              <p className="mt-1.5 max-w-xs text-base text-slate">Add a perfume, a bag or something in silk and it will wait here.</p>
+              <p className="mt-1.5 max-w-xs text-base text-slate">Add a laptop, monitor, or tech accessory and it will wait here.</p>
               <Link
                 href="/shop"
                 onClick={closeCart}

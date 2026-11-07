@@ -11,9 +11,7 @@ import { ImageUpload } from "@/components/admin/ImageUpload";
 import { useAdminHref } from "@/components/admin/AdminBase";
 import { Card, Field, inputClass, primaryButton, secondaryButton, textareaClass } from "@/components/admin/ui";
 
-const CLOTHING_SIZES = ["XS", "S", "M", "L", "XL", "XXL"];
-const SHOE_SIZES = ["36", "37", "38", "39", "40", "41", "42", "43"];
-const FOOTWEAR = ["Heels", "Slippers"];
+const HARDWARE_SPECS = ["8GB / 256GB SSD", "16GB / 512GB SSD", "16GB / 1TB SSD", "32GB / 1TB SSD", "1TB", "2TB", "4TB", "Black", "Silver", "Midnight"];
 
 export function ProductForm({ product }: { product?: Product }) {
   const { href: adminHref } = useAdminHref();
@@ -28,7 +26,7 @@ export function ProductForm({ product }: { product?: Product }) {
   const [originalPrice, setOriginalPrice] = useState(product?.originalPrice ? String(product.originalPrice) : "");
   const [category, setCategory] = useState<string>(product?.category ?? "");
   const [sizes, setSizes] = useState<string[]>(product?.sizes ?? []);
-  const SIZE_PRESETS = FOOTWEAR.includes(category) ? SHOE_SIZES : CLOTHING_SIZES;
+  const SIZE_PRESETS = HARDWARE_SPECS;
   const [sizeDraft, setSizeDraft] = useState("");
 
   const off = discountPercent(Number(price) || 0, Number(originalPrice) || undefined);
@@ -169,9 +167,9 @@ export function ProductForm({ product }: { product?: Product }) {
 
         <Card className="flex flex-col gap-3">
           <div>
-            <h2 className="font-display text-lg font-bold tracking-tight text-ink">Sizes</h2>
+            <h2 className="font-display text-lg font-bold tracking-tight text-ink">Variants &amp; Specs</h2>
             <p className="text-[15px] text-slate sm:text-sm">
-              {FOOTWEAR.includes(category) ? "EU shoe sizes. Add half sizes or UK sizes below if you need them." : "Leave empty for one-size items like perfume or bags."}
+              Optional RAM, SSD, capacity, or color variants. Leave empty for single-model items.
             </p>
           </div>
           <div className="flex flex-wrap gap-2">

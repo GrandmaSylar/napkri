@@ -11,6 +11,13 @@ if (!process.env.DATABASE_URL) {
 const pool = new Pool({ connectionString: process.env.DATABASE_URL });
 
 try {
+  // Purge legacy non-hardware rows before applying new schema constraint
+  try {
+    await pool.query("delete from public.products where category in ('Perfumes', 'Bags', 'Clothing', 'Heels', 'Slippers', 'Beauty') or slug = 'minimal-gold-hoop'");
+  } catch {
+    // Table may not exist yet on fresh database; proceed
+  }
+
   const files = process.argv.includes("--schema-only") ? ["db/schema.sql"] : ["db/schema.sql", "db/seed.sql"];
   for (const file of files) {
     await pool.query(await readFile(new URL(`../${file}`, import.meta.url), "utf8"));
